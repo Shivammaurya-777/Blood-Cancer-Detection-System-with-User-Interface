@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Blood Cancer Detection System</h2>
+    <div>
+        <a href="/dashboard">Home</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    <h3>Feedback</h3>
+
+    <form id="feedbackForm">
+        <input type="hidden" id="userid" name="userid">
+        <textarea id="feedback" name="feedback" placeholder="Enter your feedback" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script src="/static/js/script.js"></script>
+
+</body>
+</html>

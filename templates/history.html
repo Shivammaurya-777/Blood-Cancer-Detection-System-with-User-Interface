@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Blood Cancer Detection System</h2>
+    <div>
+        <a href="/dashboard">Home</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <h3>Patient History</h3>
+
+    <input type="text" id="history_patient_id" placeholder="Enter Patient ID">
+    <button onclick="getHistory()">Search</button>
+
+    <table border="1" width="100%" id="history_table" style="margin-top:20px;">
+        <tr>
+            <th>Image</th>
+            <th>Class</th>
+            <th>Confidence</th>
+            <th>Date</th>
+        </tr>
+    </table>
+
+</div>
+
+<script src="/static/js/script.js"></script>
+
+</body>
+</html>

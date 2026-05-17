@@ -7,7 +7,7 @@ import os
 
 # Load model once with error handling
 try:
-    model_path = "saved_models/best_model.keras"
+    model_path = "saved_models/model_finetuned_v1.keras"
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file not found at {model_path}")
     model = tf.keras.models.load_model(model_path)

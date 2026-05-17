@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import sqlite3  # For catching database-specific errors
 
-# Import modules
+# Import Database modules
 from database.db import cursor_user, conn_user
 from database.db import cursor_patients, conn_patients
 from database.db import cursor_feedback, conn_feedback

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Dashboard — Blood Cancer Detection System</title>
+<link rel="stylesheet" href="/frontend/css/base.css">
+<link rel="stylesheet" href="/frontend/css/dashboard.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="/" class="site-logo">🩸 Blood Cancer Detection System</a>
+  <nav>
+    <span id="doctor-name-label" style="color:#cfe4e1;font-size:0.9rem;"></span>
+  </nav>
+</header>
+
+<div class="disclaimer-banner">
+  ⚠️ <strong>Academic Project Disclaimer:</strong> This is a final year college project. Predictions are NOT a substitute for professional medical diagnosis.
+</div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">Blood Cancer Detection System</div>
+    <div class="brand-sub">Doctor Dashboard</div>
+    <nav>
+      <a href="#" class="nav-link active" data-section="prediction">Prediction</a>
+      <a href="#" class="nav-link" data-section="history">Patient History</a>
+      <a href="#" class="nav-link" data-section="feedback">Feedback</a>
+    </nav>
+    <div class="spacer"></div>
+    <nav>
+      <button id="logout-btn">Log out</button>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <!-- ===== PREDICTION SECTION ===== -->
+    <section id="section-prediction" class="section">
+      <h2>Blood cell prediction</h2>
+      <p>Blood cancers are a group of cancers affecting blood cell production, including leukemias, lymphomas, and myeloma. Upload a blood cell image and the patient's name below to run a screening prediction.</p>
+
+      <div class="card">
+        <h3 class="mt-0">Upload a sample</h3>
+        <div id="predict-alert" class="hidden"></div>
+        <form id="predict-form">
+          <label for="patient_name">Patient name</label>
+          <input type="text" id="patient_name" required>
+
+          <label for="cell_image">Blood cell image</label>
+          <input type="file" id="cell_image" accept="image/*" required>
+
+          <button type="submit" class="btn btn-primary">Submit for prediction</button>
+        </form>
+      </div>
+
+      <div class="card hidden" id="result-card">
+        <h3 class="mt-0">Prediction result</h3>
+        <div class="result-grid">
+          <img id="result-image" src="" alt="Blood cell sample">
+          <div>
+            <div class="result-field">
+              <div class="label">Patient name</div>
+              <div class="value" id="result-patient-name"></div>
+            </div>
+            <div class="result-field">
+              <div class="label">Patient ID (auto-generated)</div>
+              <div class="value" id="result-patient-id"></div>
+            </div>
+            <div class="result-field">
+              <div class="label">Predicted cancer type</div>
+              <div class="value" id="result-cancer-type"></div>
+            </div>
+            <div class="result-field">
+              <div class="label">Confidence level</div>
+              <div class="value" id="result-confidence"></div>
+              <div class="confidence-bar"><div class="confidence-bar-fill" id="result-confidence-bar"></div></div>
+            </div>
+            <div class="result-field">
+              <div class="label">Symptoms</div>
+              <div class="value" id="result-symptoms"></div>
+            </div>
+            <div class="result-field">
+              <div class="label">Suggested medicines</div>
+              <div class="value" id="result-medicines"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PATIENT HISTORY SECTION ===== -->
+    <section id="section-history" class="section hidden">
+      <h2>Patient history</h2>
+      <p>Search a patient's past prediction records by their Patient ID.</p>
+
+      <div class="card">
+        <div style="display:flex; gap:12px;">
+          <input type="text" id="history-search-id" placeholder="e.g. PT-2026-0001" style="margin-bottom:0;">
+          <button id="history-search-btn" class="btn btn-primary" style="white-space:nowrap;">Search</button>
+        </div>
+        <div id="history-alert" class="hidden" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="card hidden" id="history-result-card">
+        <h3 class="mt-0" id="history-patient-title"></h3>
+        <p class="muted" id="history-patient-created"></p>
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Cancer type</th><th>Confidence</th><th>Symptoms</th><th>Medicines</th></tr>
+          </thead>
+          <tbody id="history-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== FEEDBACK SECTION ===== -->
+    <section id="section-feedback" class="section hidden">
+      <h2>Feedback</h2>
+      <p>Help us improve the system by sharing your experience.</p>
+
+      <div class="card">
+        <div id="feedback-alert" class="hidden"></div>
+        <div id="feedback-success" class="hidden alert alert-success"></div>
+        <form id="feedback-form">
+          <label>How easy is the system to use?</label>
+          <select id="q_ease" required>
+            <option value="">Select</option>
+            <option value="5">Very easy</option>
+            <option value="4">Easy</option>
+            <option value="3">Neutral</option>
+            <option value="2">Difficult</option>
+            <option value="1">Very difficult</option>
+          </select>
+
+          <label>How accurate do the predictions seem?</label>
+          <select id="q_accuracy" required>
+            <option value="">Select</option>
+            <option value="5">Very accurate</option>
+            <option value="4">Mostly accurate</option>
+            <option value="3">Neutral</option>
+            <option value="2">Somewhat inaccurate</option>
+            <option value="1">Not accurate</option>
+          </select>
+
+          <label>Would you recommend this system to colleagues?</label>
+          <select id="q_recommend" required>
+            <option value="">Select</option>
+            <option value="yes">Yes</option>
+            <option value="maybe">Maybe</option>
+            <option value="no">No</option>
+          </select>
+
+          <label for="comments">Additional comments</label>
+          <textarea id="comments" placeholder="Tell us more..."></textarea>
+
+          <button type="submit" class="btn btn-primary">Submit feedback</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="/frontend/js/api.js"></script>
+<script src="/frontend/js/doctor_dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blood Cancer Detection System — Blood Cancer Detection System</title>
+<link rel="stylesheet" href="/frontend/css/base.css">
+<link rel="stylesheet" href="/frontend/css/index.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="/" class="site-logo">🩸 Blood Cancer Detection System</a>
+  <nav>
+    <a href="/doctor/login">Doctor Login  </a>
+    <a href="/register">Doctor Registration</a>
+  </nav>
+</header>
+
+<div class="disclaimer-banner">
+  ⚠️ <strong>Academic Project Disclaimer:</strong> This is a final year college project for educational and research purposes only.
+  Predictions are <strong>NOT</strong> a substitute for professional medical diagnosis. Always consult a certified hematologist/oncologist.
+</div>
+
+<div class="landing-hero-wrap">
+  <div class="floating-cells">
+    <img src="/static/landing_images/NGB_0059.jpg" class="cell cell-1" alt="">
+    <img src="/static/landing_images/NGB_0080.jpg" class="cell cell-2" alt="">
+    <img src="/static/landing_images/MYB_0041.jpg" class="cell cell-3" alt="">
+    <img src="/static/landing_images/NGB_0059.jpg" class="cell cell-4" alt="">
+    <img src="/static/landing_images/MYB_0041.jpg" class="cell cell-5" alt="">
+    <img src="/static/landing_images/NGB_0080.jpg" class="cell cell-6" alt="">
+  </div>
+
+  <div class="landing-hero">
+    <div class="eyebrow">Clinical decision support</div>
+    <h1>AI-assisted screening for blood cancer, built for hospital diagnostic teams.</h1>
+    <p class="lead">
+      Blood Cancer Detection System helps registered doctors screen blood cell images for signs of
+      leukemia subtypes, returning a predicted classification, confidence level,
+      associated symptoms, and treatment guidance — logged against each patient's
+      record for ongoing history tracking.
+    </p>
+    <div class="landing-cta">
+      <a href="/doctor/login" class="btn btn-primary">Doctor Login</a>
+      <a href="/register" class="btn btn-outline" style="background:#fff;">Register as a Doctor</a>
+    </div>
+  </div>
+</div>
+
+<section class="stats-section" id="stats-section">
+  <div class="stat-box"><h2 id="stat-doctors">—</h2><p>Registered Doctors</p></div>
+  <div class="stat-box"><h2 id="stat-predictions">—</h2><p>Predictions Made</p></div>
+  <div class="stat-box"><h2 id="stat-feedbacks">—</h2><p>Feedbacks</p></div>
+</section>
+
+<div class="landing-section">
+  <div class="card">
+    <h3 class="mt-0">Access is restricted</h3>
+    <p>
+      This system is intended solely for use by verified doctors and hospital
+      administrators. Doctors must register and be approved by an administrator
+      before receiving login credentials. It is not intended for use by patients
+      or members of the public.
+    </p>
+  </div>
+
+  <h3>Cell types this system screens for</h3>
+  <div class="type-grid">
+    <div class="type-item"><h4>MYB</h4><p>Myeloblast — leukemia indicator</p></div>
+    <div class="type-item"><h4>MYO</h4><p>Myelocyte — leukemia-related</p></div>
+    <div class="type-item"><h4>PMO</h4><p>Promyelocyte — leukemia indicator</p></div>
+    <div class="type-item"><h4>EBO</h4><p>Erythroblast — anemia related</p></div>
+    <div class="type-item"><h4>NGS / NGB</h4><p>Neutrophils — normal / infection markers</p></div>
+    <div class="type-item"><h4>LYT, MON, EOS, BAS</h4><p>Normal white blood cell types</p></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>&copy; 2026 Blood Cancer Detection System — Final Year College Project | Blood Cell Classification System</p>
+</footer>
+
+<script src="/frontend/js/api.js"></script>
+<script src="/frontend/js/index.js"></script>
+</body>
+</html>

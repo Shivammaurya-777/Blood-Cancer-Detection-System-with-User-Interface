@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Login — Blood Cancer Detection System</title>
+<link rel="stylesheet" href="/frontend/css/base.css">
+<link rel="stylesheet" href="/frontend/css/auth.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="/" class="site-logo">🩸 Blood Cancer Detection System</a>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/register">Register</a>
+  </nav>
+</header>
+
+<div class="disclaimer-banner">
+  ⚠️ <strong>Academic Project Disclaimer:</strong> This is a final year college project for educational and research purposes only.
+</div>
+
+<div class="auth-shell">
+  <div class="auth-card">
+    <div class="brand-mark">Blood Cancer Detection System</div>
+    <h2>Doctor login</h2>
+    <p class="muted">Enter the login ID and password provided by your administrator.</p>
+
+    <div id="alert-box" class="hidden"></div>
+
+    <form id="login-form">
+      <label for="login_id">Login ID</label>
+      <input type="text" id="login_id" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required>
+
+      <button type="submit" class="btn btn-primary" style="width:100%;">Log in</button>
+    </form>
+
+    <p class="muted text-center" style="margin-top:20px;">
+      Not registered yet? <a href="/register">Register here</a><br>
+      <a href="/">Back to home</a>
+    </p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>&copy; 2026 Blood Cancer Detection System — Final Year College Project</p>
+</footer>
+
+<script src="/frontend/js/api.js"></script>
+<script>
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  hideAlert("alert-box");
+  const submitBtn = e.target.querySelector("button[type=submit]");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Logging in...";
+
+  try {
+    const data = await apiRequest("/doctor/login", {
+      method: "POST",
+      auth: false,
+      body: {
+        login_id: document.getElementById("login_id").value,
+        password: document.getElementById("password").value,
+      },
+    });
+    Auth.setToken(data.access_token, "doctor");
+    window.location.href = "/doctor/dashboard";
+  } catch (err) {
+    showAlert("alert-box", err.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Log in";
+  }
+});
+</script>
+</body>
+</html>

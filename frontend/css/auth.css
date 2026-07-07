@@ -1,0 +1,24 @@
+.auth-shell {
+  min-height: calc(100vh - 96px); /* minus header + disclaimer banner */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy-deep);
+  padding: 40px 20px;
+}
+.auth-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
+.auth-card .brand-mark {
+  font-weight: 700;
+  color: var(--teal-primary);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}

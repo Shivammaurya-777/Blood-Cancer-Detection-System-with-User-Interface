@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Blood Cancer Detection System</title>
+<link rel="stylesheet" href="/frontend/css/base.css">
+<link rel="stylesheet" href="/frontend/css/dashboard.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="/" class="site-logo">🩸 Blood Cancer Detection System</a>
+</header>
+
+<div class="disclaimer-banner">
+  ⚠️ <strong>Academic Project Disclaimer:</strong> This is a final year college project for educational and research purposes only.
+</div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">Blood Cancer Detection System</div>
+    <div class="brand-sub">Admin Dashboard</div>
+    <nav>
+      <a href="#" class="nav-link active" data-section="requests">New Registration Requests</a>
+      <a href="#" class="nav-link" data-section="doctors">Doctor Management</a>
+      <a href="#" class="nav-link" data-section="feedback">Feedback</a>
+      <a href="/admin/change-password">Change Password</a>
+    </nav>
+    <div class="spacer"></div>
+    <nav>
+      <button id="logout-btn">Log out</button>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <section class="stats-section stats-section-inline">
+      <div class="stat-box"><h2 id="stat-doctors">—</h2><p>Registered Doctors</p></div>
+      <div class="stat-box"><h2 id="stat-predictions">—</h2><p>Predictions</p></div>
+      <div class="stat-box"><h2 id="stat-patients">—</h2><p>Patients</p></div>
+      <div class="stat-box"><h2 id="stat-feedbacks">—</h2><p>Feedbacks</p></div>
+    </section>
+
+    <!-- ===== NEW REQUESTS SECTION ===== -->
+    <section id="section-requests" class="section">
+      <h2>New registration requests</h2>
+      <div id="requests-alert" class="hidden"></div>
+
+      <div class="card" id="requests-list-card">
+        <table>
+          <thead><tr><th>Requester</th><th>Email</th><th>Degree</th><th>Submitted</th><th>Status</th><th></th></tr></thead>
+          <tbody id="requests-table-body"></tbody>
+        </table>
+        <p class="muted" id="requests-empty" style="margin-top:16px;">No pending requests.</p>
+      </div>
+
+      <!-- Detail view -->
+      <div class="card hidden" id="request-detail-card">
+        <button class="btn btn-outline" id="back-to-list-btn" style="margin-bottom:16px;">&larr; Back to list</button>
+        <h3 class="mt-0" id="detail-name"></h3>
+        <div class="result-grid">
+          <img id="detail-image" src="" alt="Degree certificate">
+          <div>
+            <div class="result-field"><div class="label">Mobile number</div><div class="value" id="detail-mobile"></div></div>
+            <div class="result-field"><div class="label">Gender</div><div class="value" id="detail-gender"></div></div>
+            <div class="result-field"><div class="label">Email</div><div class="value" id="detail-email"></div></div>
+            <div class="result-field"><div class="label">Degree</div><div class="value" id="detail-degree"></div></div>
+            <div class="result-field"><div class="label">Status</div><div class="value" id="detail-status"></div></div>
+          </div>
+        </div>
+
+        <div id="detail-actions" style="margin-top:24px; display:flex; gap:12px;">
+          <button class="btn btn-success" id="show-approve-btn">Approved</button>
+          <button class="btn btn-danger" id="show-reject-btn">Not Approved</button>
+        </div>
+
+        <div class="hidden" id="approve-panel" style="margin-top:20px; border-top:1px solid var(--border); padding-top:20px;">
+          <h4>Set login credentials</h4>
+          <div class="field-row">
+            <div>
+              <label for="approve-login-id">Login ID</label>
+              <input type="text" id="approve-login-id">
+            </div>
+            <div>
+              <label for="approve-password">Password</label>
+              <input type="text" id="approve-password">
+            </div>
+          </div>
+          <button class="btn btn-success" id="submit-approve-btn">Submit &amp; notify doctor</button>
+        </div>
+
+        <div class="hidden" id="reject-panel" style="margin-top:20px; border-top:1px solid var(--border); padding-top:20px;">
+          <h4>Reason for rejection</h4>
+          <textarea id="reject-reason" placeholder="Explain why this request was not approved..."></textarea>
+          <button class="btn btn-danger" id="submit-reject-btn">Submit &amp; notify requester</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DOCTOR MANAGEMENT SECTION ===== -->
+    <section id="section-doctors" class="section hidden">
+      <h2>Doctor management</h2>
+      <div id="doctors-alert" class="hidden"></div>
+
+      <div class="card" id="doctors-list-card">
+        <table>
+          <thead><tr><th>Name</th><th>Login ID</th><th>Mobile</th><th>Email</th><th></th></tr></thead>
+          <tbody id="doctors-table-body"></tbody>
+        </table>
+        <p class="muted" id="doctors-empty" style="margin-top:16px;">No doctors yet.</p>
+      </div>
+
+      <!-- Edit doctor panel -->
+      <div class="card hidden" id="doctor-edit-card">
+        <button class="btn btn-outline" id="back-to-doctors-btn" style="margin-bottom:16px;">&larr; Back to list</button>
+        <h3 class="mt-0">Edit doctor details</h3>
+
+        <input type="hidden" id="edit-doctor-id">
+
+        <div class="field-row">
+          <div>
+            <label for="edit-full-name">Full name</label>
+            <input type="text" id="edit-full-name">
+          </div>
+          <div>
+            <label for="edit-gender">Gender</label>
+            <select id="edit-gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div>
+            <label for="edit-email">Email</label>
+            <input type="email" id="edit-email">
+          </div>
+          <div>
+            <label for="edit-mobile">Mobile number</label>
+            <input type="text" id="edit-mobile">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div>
+            <label for="edit-login-id">Login ID</label>
+            <input type="text" id="edit-login-id">
+          </div>
+          <div>
+            <label for="edit-password">New password</label>
+            <input type="text" id="edit-password" placeholder="Leave blank to keep current password">
+          </div>
+        </div>
+
+        <button class="btn btn-success" id="save-doctor-btn">Save changes</button>
+      </div>
+    </section>
+
+    <!-- ===== FEEDBACK SECTION ===== -->
+    <section id="section-feedback" class="section hidden">
+      <h2>Doctor feedback</h2>
+      <div id="feedback-list-alert" class="hidden"></div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Doctor ID</th><th>Ratings</th><th>Comments</th><th>Submitted</th></tr></thead>
+          <tbody id="feedback-table-body"></tbody>
+        </table>
+        <p class="muted" id="feedback-empty" style="margin-top:16px;">No feedback yet.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>&copy; 2026 Blood Cancer Detection System — Final Year College Project</p>
+</footer>
+
+<script src="/frontend/js/api.js"></script>
+<script src="/frontend/js/admin_dashboard.js"></script>
+</body>
+</html>

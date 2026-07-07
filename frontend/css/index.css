@@ -1,0 +1,95 @@
+/* ---------- Landing hero ---------- */
+.landing-hero-wrap {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at top left, #d33f00, var(--navy-deep) 70%);
+  padding: 1px ; /* clip children to this box for the floating cells */
+}
+
+.landing-hero {
+  position: relative;
+  z-index: 2;
+  padding: 90px 64px 70px;
+  max-width: 780px;
+}
+.landing-hero .eyebrow {
+  color: #6fd8cd;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.landing-hero h1 {
+  font-size: 2.5rem;
+  line-height: 1.15;
+  color: #fff;
+  background: linear-gradient(90deg, #ffffff, #a9e8e0);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.landing-hero p.lead {
+  font-size: 1.05rem;
+  color: #c3d9d6;
+  margin-top: 16px;
+  max-width: 620px;
+}
+
+/* Floating blood-cell background effect */
+.floating-cells {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.floating-cells .cell {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.35;
+  filter: blur(0.4px) saturate(1.4);
+  box-shadow: 0 0 34px rgba(28, 110, 105, 0.35);
+  animation: floatCell 18s ease-in-out infinite;
+}
+
+.cell-1 { width: 110px; top: 6%;  left: 4%;  animation-duration: 20s; }
+.cell-2 { width: 70px;  top: 60%; left: 10%; animation-duration: 14s; animation-delay: 2s; }
+.cell-3 { width: 130px; top: 12%; left: 80%; animation-duration: 22s; animation-delay: 1s; }
+.cell-4 { width: 80px;  top: 68%; left: 74%; animation-duration: 16s; animation-delay: 3s; }
+.cell-5 { width: 60px;  top: 38%; left: 46%; animation-duration: 24s; animation-delay: 4s; }
+.cell-6 { width: 95px;  top: 80%; left: 30%; animation-duration: 19s; animation-delay: 2.5s; }
+
+@keyframes floatCell {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg) scale(1); }
+  33%  { transform: translateY(-24px) translateX(14px) rotate(120deg) scale(1.06); }
+  66%  { transform: translateY(14px) translateX(-14px) rotate(240deg) scale(0.94); }
+  100% { transform: translateY(0) translateX(0) rotate(360deg) scale(1); }
+}
+
+/* ---------- Restricted-access + cell type sections ---------- */
+.landing-section {
+  max-width: 760px;
+  margin: 0 auto 32px;
+  padding: 0 20px;
+}
+
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+.type-grid .type-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  background: var(--surface);
+}
+.type-grid .type-item h4 { margin-bottom: 4px; font-size: 0.95rem; }
+.type-grid .type-item p { margin: 0; font-size: 0.85rem; }
+
+.landing-cta {
+  margin-top: 28px;
+  display: flex;
+  gap: 14px;
+}

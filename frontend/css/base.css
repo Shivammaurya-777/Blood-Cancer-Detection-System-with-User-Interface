@@ -1,0 +1,211 @@
+:root {
+  --navy-deep: #0d2b2e;
+  --teal-primary: #1c6e69;
+  --teal-soft: #e4f0ee;
+  --bg: #f6f8f7;
+  --surface: #ffffff;
+  --text-main: #16262a;
+  --text-muted: #5b6b6d;
+  --border: #dde5e3;
+  --success: #2e7d5b;
+  --success-bg: #e6f4ec;
+  --danger: #a63b2c;
+  --danger-bg: #fbe9e6;
+  --warning-bg: #fff6e5;
+  --warning-text: #8a5a00;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(13, 43, 46, 0.08), 0 1px 2px rgba(13, 43, 46, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4 {
+  color: var(--navy-deep);
+  font-weight: 650;
+  margin: 0 0 0.5em 0;
+  letter-spacing: -0.01em;
+}
+
+a { color: var(--teal-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+p { color: var(--text-muted); margin: 0 0 1em 0; }
+
+/* ---------- Site header (present on every page) ---------- */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--navy-deep);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.site-header .site-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+}
+
+.site-header .site-logo:hover { text-decoration: none; }
+
+.site-header nav {
+  display: flex;
+  gap: 16px;
+}
+
+.site-header nav a {
+  color: #cfe4e1;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.site-header nav a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ---------- Disclaimer banner (present on every page) ---------- */
+.disclaimer-banner {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  text-align: center;
+  padding: 8px 20px;
+  font-size: 12.5px;
+  border-bottom: 1px solid #f0d98c;
+}
+
+/* ---------- Site footer ---------- */
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  background: var(--navy-deep);
+  color: #9fb8b4;
+  font-size: 13px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn-primary { background: var(--teal-primary); color: #fff; }
+.btn-primary:hover { background: #155852; text-decoration: none; }
+
+.btn-success { background: var(--success); color: #fff; }
+.btn-success:hover { background: #235f45; }
+
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #832f23; }
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-main);
+}
+.btn-outline:hover { background: var(--teal-soft); }
+
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---------- Forms ---------- */
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+input[type="text"], input[type="email"], input[type="password"],
+input[type="tel"], input[type="file"], select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  font-family: inherit;
+  background: #fff;
+  color: var(--text-main);
+  margin-bottom: 18px;
+}
+
+textarea { resize: vertical; min-height: 90px; }
+
+input:focus, select:focus, textarea:focus, button:focus {
+  outline: 2px solid var(--teal-primary);
+  outline-offset: 1px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ---------- Alerts ---------- */
+.alert {
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  margin-bottom: 18px;
+}
+.alert-error { background: var(--danger-bg); color: var(--danger); }
+.alert-success { background: var(--success-bg); color: var(--success); }
+
+/* ---------- Stat boxes (landing page + admin dashboard) ---------- */
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  max-width: 1100px;
+  margin: 11px auto 14px;
+  padding: 40px 30px;
+}
+
+.stat-box {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px 10px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--teal-primary);
+  transition: transform 0.15s;
+}
+.stat-box:hover { transform: translateY(-3px); }
+
+.stat-box h2 { font-size: 28px; color: var(--teal-primary); margin-bottom: 2px; }
+.stat-box p { color: var(--text-muted); margin: 0; font-size: 13px; }
+
+.stat-box.positive { border-top-color: var(--danger); }
+.stat-box.positive h2 { color: var(--danger); }
+
+.stat-box.negative { border-top-color: var(--success); }
+.stat-box.negative h2 { color: var(--success); }
+
+/* ---------- Utility ---------- */
+.hidden { display: none !important; }
+.muted { color: var(--text-muted); font-size: 0.85rem; }
+.text-center { text-align: center; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.mt-0 { margin-top: 0; }

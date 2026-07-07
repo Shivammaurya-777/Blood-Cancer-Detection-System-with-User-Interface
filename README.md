@@ -1,639 +1,119 @@
-﻿# Blood Cancer Detection System 
+# HemaScan — Blood Cancer Detection System
 
-## Project Overview
+A hospital-only system: doctors register and get approved by an admin, then use
+an AI model to screen blood cell images for leukemia types, track patient
+history, and submit feedback. Admins approve/reject doctor registrations and
+manage doctor accounts.
 
-The **Blood Cancer Detection System with User Interface** is a web-based machine learning project designed to classify blood cell images and show prediction results through a simple user interface. The system allows users to register, log in, upload a blood cell image, receive the predicted blood cell class with a confidence score, view possible related symptoms, search patient records, check prediction history, and submit feedback.
+## Tech stack
+- Backend: FastAPI (Python) + SQLite (via SQLAlchemy) + JWT auth
+- Frontend: Plain HTML/CSS/JS (no build step needed)
+- ML: PyTorch (.pth) model — plug in your trained model, see below
 
-This project uses a trained TensorFlow/Keras deep learning model for image classification and a FastAPI backend for handling web pages, APIs, image uploads, authentication, database storage, and prediction requests.
+---
 
-## Objective
-
-The main objective of this project is to provide a user-friendly blood cancer detection support system that can:
-
-- Accept microscopic blood cell images from the user.
-- Preprocess uploaded images into the model-required format.
-- Predict the blood cell class using a trained deep learning model.
-- Display the predicted class, confidence score, and related symptoms.
-- Store patient information and prediction history.
-- Allow users to search previous patient details.
-- Collect user feedback for future improvement.
-
-## Important Note
-
-This project is created for academic and learning purposes. It is not a replacement for professional medical diagnosis. The prediction result should be treated as a computer-assisted indication only. Final diagnosis must always be done by qualified doctors, pathologists, or hematologists.
-
-## Technologies Used
-
-### Backend
-
-- Python
-- FastAPI
-- Uvicorn
-- SQLite3
-- Jinja2 Templates
-- Python Multipart for file upload handling
-- CORS Middleware for API accessibility
-
-### Machine Learning
-
-- TensorFlow
-- Keras
-- NumPy
-- Pillow
-
-### Frontend
-
-- HTML
-- CSS
-- JavaScript
-- Fetch API
-- Browser LocalStorage
-
-### Database
-
-- SQLite
-
-The project uses multiple SQLite database files:
-
-- `user.db`
-- `patients.db`
-- `feedback.db`
-- `predictions.db`
-
-## Project Structure
-
-```text
-Blood Cancer app/
-├── main.py
-├── README.md
-├── requirements.txt
-├── database/
-│   ├── db.py
-│   ├── user.db
-│   ├── patients.db
-│   ├── feedback.db
-│   └── predictions.db
-├── saved_models/
-│   ├── load_model.py
-│   ├── best_model.keras
-│   ├── model_finetuned.keras
-│   └── model_finetuned_v1.keras
-├── static/
-│   ├── css/
-│   │   └── style.css
-│   ├── js/
-│   │   └── script.js
-│   └── uploads/
-│       └── uploaded patient images
-└── templates/
-    ├── login.html
-    ├── signup.html
-    ├── dashbord.html
-    ├── history.html
-    └── feedback.html
-```
-
-## Main Files Description
-
-### `main.py`
-
-This is the main FastAPI application file. It contains:
-
-- FastAPI app creation.
-- CORS middleware setup.
-- Static file mounting.
-- Template configuration.
-- Page routes.
-- Authentication APIs.
-- Patient search API.
-- Prediction API.
-- Feedback API.
-- History API.
-
-### `database/db.py`
-
-This file creates and connects to the SQLite databases. It creates the required tables automatically if they do not already exist.
-
-It manages:
-
-- User database connection.
-- Patient database connection.
-- Feedback database connection.
-- Prediction history database connection.
-
-### `saved_models/load_model.py`
-
-This file loads the trained Keras model and handles prediction logic.
-
-It contains:
-
-- Model loading from `saved_models/model_finetuned_v1.keras`.
-- Image preprocessing.
-- Class label list.
-- Symptoms mapping for each predicted class.
-- Prediction function.
-- Helper functions for model information and image validation.
-
-### `static/js/script.js`
-
-This file contains frontend JavaScript logic for:
-
-- User signup.
-- User login.
-- Saving logged-in user ID in localStorage.
-- Uploading image and patient details.
-- Calling prediction API.
-- Searching patient details.
-- Fetching prediction history.
-- Submitting feedback.
-- Clearing user session on logout.
-
-### `static/css/style.css`
-
-This file contains the styling for:
-
-- Login page.
-- Signup page.
-- Dashboard page.
-- Upload form.
-- Patient result card.
-- History page.
-- Feedback page.
-- Navigation bar.
-
-### `templates/`
-
-This folder contains the HTML pages used by the web application:
-
-- `login.html` - User login page.
-- `signup.html` - User registration page.
-- `dashbord.html` - Main dashboard for image upload and result display.
-- `history.html` - Patient prediction history page.
-- `feedback.html` - Feedback submission page.
-
-## Application Features
-
-### 1. User Signup
-
-New users can register using:
-
-- User ID
-- Email ID
-- Password
-
-The signup API checks:
-
-- Required fields.
-- Email format.
-- Duplicate user ID.
-- Duplicate email ID.
-
-Signup endpoint:
-
-```text
-POST /api/signup
-```
-
-### 2. User Login
-
-Registered users can log in using:
-
-- User ID
-- Password
-
-After successful login, the user ID is stored in browser localStorage and the user is redirected to the dashboard.
-
-Login endpoint:
-
-```text
-POST /login
-```
-
-### 3. Dashboard
-
-The dashboard allows the user to:
-
-- Upload a blood cell image.
-- Enter patient name.
-- Automatically generate a patient ID if no existing patient is selected.
-- Submit the image for prediction.
-- View the result on the same page.
-
-Dashboard route:
-
-```text
-GET /dashboard
-```
-
-### 4. Blood Cell Image Prediction
-
-The prediction system accepts:
-
-- Uploaded image file.
-- Patient ID.
-- Patient name.
-- User ID.
-
-The image is saved inside:
-
-```text
-static/uploads/
-```
-
-Then the model:
-
-1. Opens the uploaded image.
-2. Converts it to RGB.
-3. Resizes it to `224 x 224`.
-4. Normalizes pixel values by dividing by `255.0`.
-5. Expands the image dimensions for model input.
-6. Predicts the class.
-7. Returns predicted class, confidence score, and symptoms.
-
-Prediction endpoint:
-
-```text
-POST /predict
-```
-
-### 5. Patient Search
-
-The user can search for an existing patient by patient ID. If found, the application displays:
-
-- User ID.
-- Patient name.
-- Detected class.
-- Confidence score.
-- Symptoms.
-- Image path.
-- Created date and time.
-
-Patient search endpoint:
-
-```text
-GET /patient/{patient_id}
-```
-
-### 6. Prediction History
-
-The history page allows users to search all previous predictions for a patient ID. The result includes:
-
-- Uploaded image.
-- Predicted class.
-- Confidence score.
-- Prediction date and time.
-
-History endpoint:
-
-```text
-GET /history/{patient_id}
-```
-
-### 7. Feedback
-
-Logged-in users can submit feedback. Feedback is stored in the SQLite feedback database.
-
-Feedback endpoint:
-
-```text
-POST /feedback
-```
-
-## Model Details
-
-The application loads the model from:
-
-```text
-saved_models/model_finetuned_v1.keras
-```
-
-The model input image size is:
-
-```text
-224 x 224 x 3
-```
-
-The model predicts one of the following 15 classes:
-
-| Class Code | Meaning in Project Context |
-|---|---|
-| BAS | Basophil-related class |
-| EBO | Eosinophil-related class |
-| EOS | Eosinophil class |
-| KSC | Abnormal cell type class |
-| LYA | Lymphocyte abnormality class |
-| LYT | Lymphocyte class |
-| MMZ | Monocyte-related class |
-| MOB | Monocyte disorder class |
-| MON | Monocyte class |
-| MYB | Myeloblast-related class |
-| MYO | Myelocyte class |
-| NGB | Neutrophil-related class |
-| NGS | Neutrophil abnormality class |
-| PMB | Promyeloblast class |
-| PMO | Promonocyte class |
-
-For each predicted class, the system returns related symptom information from the symptoms mapping in `saved_models/load_model.py`.
-
-## Database Details
-
-### Users Table
-
-Database file:
-
-```text
-database/user.db
-```
-
-Table name:
-
-```text
-users
-```
-
-Columns:
-
-| Column | Type | Description |
-|---|---|---|
-| id | INTEGER | Auto-increment primary key |
-| user_id | TEXT | Unique user ID used for login |
-| email | TEXT | Unique email address |
-| password | TEXT | User password |
-| created_at | TIMESTAMP | Registration timestamp |
-
-### Patients Table
-
-Database file:
-
-```text
-database/patients.db
-```
-
-Table name:
-
-```text
-patients
-```
-
-Columns:
-
-| Column | Type | Description |
-|---|---|---|
-| patient_id | TEXT | Primary key and unique patient ID |
-| user_id | TEXT | User who uploaded the patient record |
-| patient_name | TEXT | Name of patient |
-| detected_class | TEXT | Predicted blood cell class |
-| confidence_score | REAL | Model confidence score |
-| symptoms | TEXT | Symptoms related to prediction |
-| image_path | TEXT | Uploaded image path |
-| created_at | TIMESTAMP | Record creation timestamp |
-
-### Feedback Table
-
-Database file:
-
-```text
-database/feedback.db
-```
-
-Table name:
-
-```text
-feedback
-```
-
-Columns:
-
-| Column | Type | Description |
-|---|---|---|
-| id | INTEGER | Auto-increment primary key |
-| userid | TEXT | User ID of feedback sender |
-| feedback | TEXT | Feedback message |
-| created_at | TIMESTAMP | Feedback submission timestamp |
-
-### Predictions Table
-
-Database file:
-
-```text
-database/predictions.db
-```
-
-Table name:
-
-```text
-predictions
-```
-
-Columns:
-
-| Column | Type | Description |
-|---|---|---|
-| id | INTEGER | Auto-increment primary key |
-| patient_id | TEXT | Patient ID |
-| predicted_class | TEXT | Predicted class |
-| confidence | REAL | Prediction confidence |
-| image_path | TEXT | Uploaded image path |
-| created_at | TIMESTAMP | Prediction timestamp |
-
-## API Routes
-
-### Page Routes
-
-| Method | Route | Description |
-|---|---|---|
-| GET | `/` | Login page |
-| GET | `/signup` | Signup page |
-| GET | `/dashboard` | Dashboard page |
-| GET | `/feedback` | Feedback page |
-| GET | `/history` | Prediction history page |
-
-### Backend API Routes
-
-| Method | Route | Description |
-|---|---|---|
-| POST | `/api/signup` | Register a new user |
-| POST | `/login` | Validate login details |
-| POST | `/predict` | Upload image and return prediction |
-| GET | `/patient/{patient_id}` | Fetch patient details |
-| GET | `/history/{patient_id}` | Fetch prediction history |
-| POST | `/feedback` | Submit user feedback |
-
-## System Workflow
-
-1. User opens the application.
-2. User creates an account or logs in.
-3. User goes to the dashboard.
-4. User uploads a blood cell image and enters patient name.
-5. JavaScript sends image and patient data to the FastAPI backend.
-6. Backend saves the uploaded image.
-7. Backend sends the image path to the prediction function.
-8. The image is preprocessed for the deep learning model.
-9. The model predicts the blood cell class.
-10. The predicted class, confidence score, and symptoms are returned.
-11. Patient data is inserted or updated in the database.
-12. Prediction history is saved.
-13. The result is displayed on the dashboard.
-14. User can later search patient details or view prediction history.
-15. User can submit feedback.
-
-## Installation and Setup
-
-### 1. Open the Project Folder
-
-Open the project directory:
-
-```text
-Blood Cancer app
-```
-
-### 2. Create a Virtual Environment
+## 1. Setup
 
 ```bash
-python -m venv venv
-```
-
-### 3. Activate the Virtual Environment
-
-For Windows PowerShell:
-
-```powershell
-.\venv\Scripts\Activate.ps1
-```
-
-For Windows Command Prompt:
-
-```bat
-venv\Scripts\activate
-```
-
-### 4. Install Dependencies
-
-```bash
+cd blood_cancer_system
 pip install -r requirements.txt
+python init_db.py       # creates database.db + a default admin account
 ```
 
-### 5. Check Model File
+Default admin login (change this after first login):
+- Email: `admin@hospital.com`
+- Password: `Admin@123`
 
-Make sure this file exists:
-
-```text
-saved_models/model_finetuned_v1.keras
-```
-
-The application loads this model when the server starts.
-
-### 6. Run the Application
+## 2. Run the backend
 
 ```bash
-uvicorn main:app --reload
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### 7. Open in Browser
+The API is now live at `http://localhost:8000`.
 
-Open:
+## 3. Run the frontend
 
-```text
-http://127.0.0.1:8000
+The frontend is plain static HTML/CSS/JS — any static server works:
+
+```bash
+cd frontend
+python -m http.server 8080
 ```
 
-## How to Use the Application
+Open `http://localhost:8080/index.html` in your browser.
 
-1. Open the login page.
-2. Click **Sign Up** if you are a new user.
-3. Register with user ID, email, and password.
-4. Log in using your user ID and password.
-5. On the dashboard, upload a blood cell image.
-6. Enter the patient name.
-7. Click **Submit**.
-8. View the predicted class, confidence score, symptoms, and date/time.
-9. Search patient details by patient ID if needed.
-10. Open the history page to view previous predictions.
-11. Open the feedback page to submit feedback.
-12. Click logout to clear the saved user ID from localStorage.
+> If you deploy backend/frontend on different hosts, update `API_BASE` in
+> `frontend/js/api.js`.
 
-## Prediction Output
+## 4. Plug in your trained model
 
-After uploading an image, the system returns:
-
-- `predicted_class`
-- `confidence`
-- `symptoms`
-
-Example response:
-
-```json
-{
-  "predicted_class": "MYB",
-  "confidence": 0.94,
-  "symptoms": "Myeloblast-related disorders present with..."
-}
+Drop your trained PyTorch model file here:
+```
+app/ml_model/model.pt
 ```
 
-## Error Handling
+Then open `app/utils/ml_predict.py` and:
+1. Set `CLASS_NAMES` to match your model's exact output classes, in order.
+2. If your `.pt` file was saved as a full model (`torch.save(model, path)`), it loads automatically.
+   If it was saved as a `state_dict`, follow the comment in `_load_model()` to plug in your architecture.
+3. Fill in `SYMPTOMS_MAP` and `MEDICINES_MAP` with clinically verified content per class — the placeholders
+   in there now are NOT medical advice and must be reviewed/filled by a qualified clinical team.
 
-The project includes error handling for:
+Until a model file is present, the app automatically falls back to a **mock predictor**
+(random class + confidence) so you can test the full flow end-to-end.
 
-- Missing required signup fields.
-- Invalid email format.
-- Duplicate user ID.
-- Duplicate email address.
-- Invalid login credentials.
-- Missing model file.
-- Image preprocessing failure.
-- Prediction failure.
-- Database insert or update error.
-- Empty patient search field.
-- Empty history search field.
-- Feedback submission without login.
+## 5. Email & SMS notifications
 
-If prediction fails, the backend returns:
+Currently **simulated** — approval/rejection messages are printed to the console
+and logged to `sent_emails.log` / `sent_sms.log` instead of actually sending.
 
-```json
-{
-  "predicted_class": "ERROR",
-  "confidence": 0.0,
-  "symptoms": "Prediction failed due to server error"
-}
+To go live:
+- Email: edit `app/utils/email_service.py`, set `SIMULATE = False`, fill in SMTP credentials
+- SMS: edit `app/utils/sms_service.py`, set `SIMULATE = False`, integrate your SMS provider (Twilio, MSG91, etc.)
+
+## 6. Project structure
+
+```
+blood_cancer_system/
+├── app/
+│   ├── main.py                  # FastAPI app entrypoint
+│   ├── database.py              # DB engine/session
+│   ├── models.py                # SQLAlchemy tables
+│   ├── schemas.py                # Pydantic request/response models
+│   ├── auth.py                  # JWT auth + password hashing
+│   ├── utils/
+│   │   ├── email_service.py
+│   │   ├── sms_service.py
+│   │   ├── id_generator.py      # auto Patient ID / Doctor login ID
+│   │   └── ml_predict.py        # loads model.pt, runs prediction
+│   ├── routers/                 # all API endpoints, grouped by feature
+│   ├── static/uploads/          # uploaded degree + cell images
+│   └── ml_model/                # put your model.pt here
+├── frontend/
+│   ├── index.html               # landing page
+│   ├── register.html            # doctor registration
+│   ├── doctor_login.html
+│   ├── admin_login.html
+│   ├── doctor_dashboard.html    # prediction, patient history, feedback
+│   ├── admin_dashboard.html     # requests, doctor management, feedback
+│   ├── css/style.css
+│   └── js/
+├── init_db.py
+└── requirements.txt
 ```
 
-## Security Notes
+## 7. End-to-end flow (already tested)
 
-This project is suitable for academic demonstration, but some changes are required before using it in production:
+1. Doctor submits registration → `POST /register`
+2. Admin views pending requests → `GET /admin/requests`
+3. Admin approves (sets login ID + password) → `POST /admin/requests/{id}/approve` → sends email+SMS
+   OR admin rejects with a reason → `POST /admin/requests/{id}/reject` → sends email+SMS
+4. Doctor logs in with the issued credentials → `POST /doctor/login`
+5. Doctor uploads a cell image + patient name → `POST /predict` → auto-generates Patient ID, runs model, saves record
+6. Doctor searches patient history by Patient ID → `GET /patients/{id}`
+7. Doctor submits feedback → `POST /feedback`
+8. Admin views feedback list → `GET /admin/feedback`
+9. Admin manages doctors (edit/delete) → `PUT` / `DELETE /admin/doctors/{id}`
 
-- Passwords are currently stored as plain text. Password hashing should be added.
-- Authentication uses browser localStorage only. A secure session or token-based system should be added.
-- Uploaded file names are used directly. File name sanitization should be added.
-- Uploaded image type and size validation should be improved.
-- CORS currently allows all origins. It should be restricted in production.
-- SQLite is useful for small projects, but a production system should use a stronger database such as PostgreSQL or MySQL.
-- Medical predictions should be validated clinically before real-world usage.
-
-## Limitations
-
-- The system depends on the accuracy of the trained model.
-- It only supports image-based classification.
-- The result is not a final medical diagnosis.
-- Password security is basic in the current version.
-- The dashboard generates patient IDs using the current timestamp.
-- The project uses local file storage for uploaded images.
-- The model file is large and must be present locally.
-
-## Future Enhancements
-
-- Add password hashing using `bcrypt` or `passlib`.
-- Add proper session management or JWT authentication.
-- Add admin dashboard.
-- Add doctor dashboard.
-- Add patient report download as PDF.
-- Add image preview before upload.
-- Add model accuracy, precision, recall, and confusion matrix report.
-- Add secure file upload validation.
-- Add role-based access control.
-- Add database backup and restore.
-- Add better medical report formatting.
-- Add deployment support using Docker.
-
-## Conclusion
-
-The Blood Cancer Detection System with User Interface combines a FastAPI web application, SQLite database storage, frontend pages, and a TensorFlow/Keras model to classify blood cell images. It provides a complete academic project workflow from user registration and image upload to prediction, patient record storage, history tracking, and feedback collection.
+All of the above was verified working with real HTTP requests during development.

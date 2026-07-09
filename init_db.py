@@ -37,22 +37,22 @@ def init():
     print("Creating tables across 4 separate database files...")
 
     Base.metadata.create_all(bind=admin_engine, tables=[models.Admin.__table__])
-    print("  admins.db    -> admins")
+    print("  database/admins.db    -> admins")
 
     Base.metadata.create_all(bind=doctor_engine, tables=[
         models.RegistrationRequest.__table__,
         models.Doctor.__table__,
     ])
-    print("  doctors.db   -> registration_requests, doctors")
+    print("  database/doctors.db   -> registration_requests, doctors")
 
     Base.metadata.create_all(bind=patient_engine, tables=[
         models.Patient.__table__,
         models.Prediction.__table__,
     ])
-    print("  patients.db  -> patients, predictions")
+    print("  database/patients.db  -> patients, predictions")
 
     Base.metadata.create_all(bind=feedback_engine, tables=[models.Feedback.__table__])
-    print("  feedback.db  -> feedback")
+    print("  database/feedback.db  -> feedback")
 
     db = AdminSessionLocal()
     try:
@@ -79,7 +79,7 @@ def init():
     finally:
         db.close()
 
-    print("Done. admins.db, doctors.db, patients.db, feedback.db are ready.")
+    print("Done. database/admins.db, database/doctors.db, database/patients.db, database/feedback.db are ready.")
 
 
 if __name__ == "__main__":

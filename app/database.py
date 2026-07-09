@@ -1,18 +1,20 @@
 """
 Database connection setup (SQLite + SQLAlchemy).
 
-Data is split across FOUR separate SQLite files instead of one shared
-database, so each concern is easy to find/inspect on disk:
+Data is split across FOUR separate SQLite files, all kept together inside
+the database/ folder instead of scattered at the project root:
 
-    admins.db     -> Admin accounts
-    doctors.db    -> Doctor accounts + registration requests
-                     (kept together: a Doctor is created directly from a
-                     RegistrationRequest in the same transaction, and
-                     Doctor.request_id is a real foreign key to it)
-    patients.db   -> Patients + their predictions
-                     (kept together: a Prediction always belongs to a
-                     Patient via a real foreign key, queried together)
-    feedback.db   -> Doctor feedback submissions
+    database/admins.db     -> Admin accounts
+    database/doctors.db    -> Doctor accounts + registration requests
+                               (kept together: a Doctor is created directly
+                               from a RegistrationRequest in the same
+                               transaction, and Doctor.request_id is a real
+                               foreign key to it)
+    database/patients.db   -> Patients + their predictions
+                               (kept together: a Prediction always belongs
+                               to a Patient via a real foreign key, queried
+                               together)
+    database/feedback.db   -> Doctor feedback submissions
 
 Note: SQLite cannot enforce foreign keys *across* separate database files.
 Columns like Patient.doctor_id and Feedback.doctor_id still store the
@@ -20,11 +22,13 @@ doctor's id (so you can cross-reference by hand or join in application
 code), but they are plain integer columns rather than enforced foreign
 keys, since the "doctors" table lives in a different .db file.
 
-All .db files are auto-created the first time init_db.py runs.
+The database/ folder and all four .db files are auto-created the first
+time init_db.py runs.
 """
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+import os
 
 # A single declarative Base is fine to share across all four databases -
 # it just tracks table/column metadata. What matters is which *engine*
@@ -32,10 +36,16 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 # router uses to query/write.
 Base = declarative_base()
 
+# All .db files live together in one folder instead of scattered at the
+# project root - easier to find, back up, or gitignore as a single unit.
+DB_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "database")
+os.makedirs(DB_DIR, exist_ok=True)
+
 
 def _make_engine(db_filename: str):
+    db_path = os.path.join(DB_DIR, db_filename)
     return create_engine(
-        f"sqlite:///./{db_filename}",
+        f"sqlite:///{db_path}",
         connect_args={"check_same_thread": False},
     )
 

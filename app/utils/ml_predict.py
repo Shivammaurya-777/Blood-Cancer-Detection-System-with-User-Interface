@@ -13,7 +13,7 @@ from app.ml_model.load_model import class_names, get_model_status
 
 # Classes considered a "positive" / abnormal finding (immature / blast cells
 # associated with leukemia). Everything else is treated as "negative".
-POSITIVE_CLASSES = {"MYB", "MYO", "PMO", "EBO"}
+#POSITIVE_CLASSES = {"MYB", "MYO", "PMO", "EBO"}
 
 FULL_NAMES = {
     "BAS": "Basophil",
@@ -84,6 +84,6 @@ def get_full_name(cancer_type: str) -> str:
     return FULL_NAMES.get(cancer_type, cancer_type)
 
 
-def is_positive(cancer_type: str) -> bool:
-   """True if this class is treated as an abnormal/positive finding."""
-   return cancer_type in POSITIVE_CLASSES
+#def is_positive(cancer_type: str) -> bool:
+ #  """True if this class is treated as an abnormal/positive finding."""
+  # return cancer_type in POSITIVE_CLASSES

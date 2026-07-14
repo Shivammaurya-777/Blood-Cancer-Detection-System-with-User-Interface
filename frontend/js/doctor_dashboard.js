@@ -125,3 +125,16 @@ document.getElementById("feedback-form").addEventListener("submit", async (e) =>
     submitBtn.textContent = "Submit feedback";
   }
 });
+// ---------- Stat boxes ----------
+async function loadDashboardStats() {
+  try {
+    const stats = await apiRequest("/stats", { auth: false });
+    document.getElementById("stat-doctors").textContent = stats.doctors;
+    document.getElementById("stat-patients").textContent = stats.patients;
+    document.getElementById("stat-feedbacks").textContent = stats.feedbacks;
+  } catch (err) {
+    console.error("Failed to load stats", err);
+  }
+}
+loadDashboardStats();
+setInterval(loadDashboardStats, 30000);

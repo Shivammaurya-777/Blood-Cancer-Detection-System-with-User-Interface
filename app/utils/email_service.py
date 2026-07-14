@@ -52,7 +52,7 @@ def send_approval_email(to_email: str, full_name: str, login_id: str, password: 
         f"Blood Cancer Detection System with the following credentials:\n\n"
         f"Login ID: {login_id}\n"
         f"Password: {password}\n\n"
-        f"Please change your password after your first login (if supported) "
+        f"Use this ID & Password "
         f"and keep these credentials confidential.\n\n"
         f"Regards,\nAdmin Team"
     )

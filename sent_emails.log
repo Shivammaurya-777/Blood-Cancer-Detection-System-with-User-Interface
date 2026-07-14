@@ -65,3 +65,36 @@ Please change your password after your first login (if supported) and keep these
 Regards,
 Admin Team
 ----------------------------------------
+
+--- EMAIL (2026-07-12T08:11:19.636920) ---
+To: shivammaurya65302@gmail.com
+Subject: Your registration has been approved
+
+Dear Dr. Shivam Maurya,
+
+Your registration has been approved. You can now log in to the Blood Cancer Detection System with the following credentials:
+
+Login ID: shivam12
+Password: shivam@12
+
+Use this ID & Password and keep these credentials confidential.
+
+Regards,
+Admin Team
+----------------------------------------
+
+--- EMAIL (2026-07-12T08:23:16.119264) ---
+To: shivammaurya65302@gmail.com
+Subject: Your registration was not approved
+
+Dear Shivam Maurya,
+
+We regret to inform you that your registration request was not approved.
+
+Reason: please re-upload your document
+
+You are welcome to submit a new request with corrected/updated details.
+
+Regards,
+Admin Team
+----------------------------------------

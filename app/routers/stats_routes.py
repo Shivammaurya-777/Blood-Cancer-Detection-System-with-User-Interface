@@ -16,19 +16,14 @@ def get_stats(
 ):
     doctors = doctor_db.query(models.Doctor).count()
     feedbacks = feedback_db.query(models.Feedback).count()
-
-    predictions_query = patient_db.query(models.Prediction).all()
-    predictions = len(predictions_query)
+    predictions = patient_db.query(models.Prediction).count()
     patients = patient_db.query(models.Patient).count()
 
-    positive = sum(1 for p in predictions_query if ml_predict.is_positive(p.cancer_type))
-    negative = predictions - positive
-
+    
     return schemas.StatsOut(
         doctors=doctors,
         feedbacks=feedbacks,
         predictions=predictions,
         patients=patients,
-        positive=positive,
-        negative=negative,
+
     )

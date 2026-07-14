@@ -42,8 +42,6 @@ class StatsOut(BaseModel):
     feedbacks: int
     predictions: int
     patients: int
-    positive: int
-    negative: int
 
 
 class TokenResponse(BaseModel):
@@ -58,7 +56,7 @@ class RegistrationRequestOut(BaseModel):
     full_name: str
     mobile_number: str
     gender: str
-    email: str
+    email: EmailStr
     degree: str
     degree_image_path: str
     status: str
@@ -84,7 +82,7 @@ class DoctorOut(BaseModel):
     full_name: str
     mobile_number: str
     gender: str
-    email: str
+    email: EmailStr
     degree: str
     degree_image_path: str
     login_id: str
@@ -98,7 +96,7 @@ class DoctorUpdate(BaseModel):
     full_name: Optional[str] = None
     mobile_number: Optional[str] = None
     gender: Optional[str] = None
-    email: Optional[str] = None
+    email: Optional[EmailStr] = None
     degree: Optional[str] = None
     login_id: Optional[str] = None
     new_password: Optional[str] = None
